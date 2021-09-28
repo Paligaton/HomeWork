@@ -1,15 +1,3 @@
-from random import randint
-
-
-def get_jokes(intdig):
-    nouns = ["автомобиль", "лес", "огонь", "город", "дом"]
-    adverbs = ["сегодня", "вчера", "завтра", "позавчера", "ночью"]
-    adjectives = ["веселый", "яркий", "зеленый", "утопичный", "мягкий"]
-    jokes = []
-    for i in range(intdig):
-        joke = nouns[randint(0, 4)] + ' ' + adverbs[randint(0, 4)] + ' ' + adjectives[randint(0, 4)]
-        jokes.append(joke)
-    return jokes
-
-
-print(get_jokes(int(input())))
+src = [2, 2, 2, 7, 23, 1, 44, 44, 3, 2, 10, 7, 4, 11]
+result = [v for v in tuple(src) if src.count(v) == 1]
+print(result)
