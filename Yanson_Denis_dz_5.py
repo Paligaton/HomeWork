@@ -1,7 +1,3 @@
-from sys import argv
-from Yanson_denis_dz_2_4 import  currency_rates
-
-if len(argv) > 1:
-    currency_rates(argv[1])
-else:
-    currency_rates(input())
+src = [2, 2, 2, 7, 23, 1, 44, 44, 3, 2, 10, 7, 4, 11]
+result = [v for v in tuple(src) if src.count(v) == 1]
+print(result)
