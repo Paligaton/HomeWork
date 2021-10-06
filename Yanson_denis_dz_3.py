@@ -1,22 +1,11 @@
-from itertools import islice
-
-
-def gen(tut, klass):
-    for i, v in enumerate(tut):
-        if i < len(klass):
-            cort = (v, klass[i])
-        else:
-            cort = (v, 'None')
-        yield cort
-
-
-tutors = [
-    'Иван', 'Анастасия', 'Петр', 'Сергей',
-    'Дмитрий', 'Борис', 'Елена'
-]
-klasses = [
-    '9А', '7В', '9Б', '9В', '8Б', '10А'
-]
-gens = gen(tutors,klasses)
-print(list(islice(gens, len(tutors))))
-print(next(gens))
+import os
+import shutil
+u_dict = {'roots': [], 'dirs': []}
+for root, dirs, files in os.walk('my_project'):
+    if 'templates' == root.split('\\')[-1]:
+        for i in dirs:
+            u_dict['roots'].append(root)
+            u_dict['dirs'].append(i)
+for i, val in enumerate(u_dict['roots']):
+    #print(val+r'\templates')
+    shutil.copytree(val+r'\\' + u_dict['dirs'][i], r'my_project\templates\\' + u_dict['dirs'][i])
