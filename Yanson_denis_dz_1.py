@@ -1,31 +1,23 @@
-import re
-
-class DateParse:
-
-    def __init__(self, dd, mm, yy):
-        self.day=dd
-        self.month=mm
-        self.year=yy
-
-    @classmethod
-    def parse(cls, txt):
-        RE_LINE = re.compile(r'^(\S+){1}-(\S+){1}-(\S+){1}')
-        cd = RE_LINE.findall(txt)
-        cls.valid(cd)
-        return cls(cd[0][0], cd[0][1], cd[0][2])
-
-    @staticmethod
-    def valid(txt):
-        if len(txt) == 0:
-            raise ValueError('wrong format')
-        if not txt[0][0].isdigit() and  not txt[0][0].isdigit() and  not txt[0][0].isdigit():
-            raise ValueError('wrong format date has a letter')
-        if int(txt[0][0])>31 or int(txt[0][0])<1:
-            raise ValueError('day bigger than 31 or less than 1')
-        if int(txt[0][1])>12 or int(txt[0][1])<1:
-            raise ValueError('month bigger then 12 or less than 1')
-
-
-
-date = DateParse.parse('31-12-2000')
-print(date.day.isdigit())
+parsed_dict = {'ip': [], 'date': [], 'act': [], 'numbs': [], 'protocol': []}
+file_1 = open(r'E:\Users\NeoHan\PycharmProjects\HomeWork\nginx_logs.txt', 'r', encoding='utf-8')
+for i in file_1:
+    f_string = file_1.readline()
+    ip = f_string.find('- -')
+    parsed_dict['ip'].append(f_string[:ip])
+    parsed_dict['date'].append(f_string[f_string.find('[')+1:f_string.find(']')])
+    act = [f_string.find('"')+1, f_string.find('"', f_string.find('"')+1)]
+    parsed_dict['act'].append(f_string[act[0]:act[1]])
+    numbs = [act[1]+1, f_string.find('"', act[1]+1)]
+    parsed_dict['numbs'].append(f_string[numbs[0]+1:numbs[1]-1])
+    protocol = [-1, f_string.find('"', -2)]
+    parsed_dict['protocol'].append(f_string[f_string.find('"', numbs[1]+4):-2])
+file_1.close()
+print(parsed_dict)
+spamer = ''
+set_ips = set(parsed_dict['ip'])
+counter = 0
+for i in set_ips:
+    if counter < parsed_dict['ip'].count(i):
+        counter = parsed_dict['ip'].count(i)
+        spamer = i
+print(spamer)
