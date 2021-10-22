@@ -1,17 +1,23 @@
-task_dict = {}
-with open('hobby.csv', 'r', encoding='utf-8') as file_1:
-    with open('users.csv', 'r', encoding='utf-8') as file_2:
-        for line_2 in file_2:
-            hobby = file_1.readline()[:-1]
-            print(str(hobby))
-            if hobby == '':
-                hobby = 'None'
-            task_dict[line_2[:-1]] = hobby
-        print(task_dict)
-        hobby = file_1.readline()[:-1]
-        if hobby != '':
-            print('1')
-with open('write_method.txt', 'w', encoding='utf-8') as f:
-   for i in task_dict:
-       f.write(i + ':' + task_dict[i])
+from abc import ABC, abstractmethod
 
+class Clothes(ABC):
+    def __init__(self, v):
+        self.v = v
+    @property
+    @abstractmethod
+    def count(self):
+        pass
+    def __add__(self, other):
+        return self.count() + other.count()
+class Coat(Clothes):
+    def count(self):
+        return self.v/6.5+0.5
+class Suit(Clothes):
+    def count(self):
+        return self.v*2+0.3
+
+suit=Suit(5)
+coat=Coat(5)
+print(coat.count())
+print(suit.count())
+print(coat+suit)
